@@ -36,6 +36,23 @@ def count_calls(method: Callable) -> Callable:
     return wrapper
 
 
+def replay(method: Callable) -> Callable:
+    '''replay the history of a particular func'''
+    m_key = method.__qualname__
+    inputs = m_key + ":inputs"
+    outputs = m_key + ":outputs"
+    redis = method.__self__._redis
+    cnt = redis.get(m_key).decode("utf-8")
+    print("{} was called {} times:".format(m_key, cnt))
+    AllInp = redis.lrange(inputs, 0, -1)
+    AllOut = redis.lrange(outputs, 0, -1)
+    allData = list(zip(AllInp, AllOut))
+    for k, v in allData:
+        key = k.decode("utf-8")
+        value = v.decode("utf-8")
+        print("{}(*{}) -> {}".format(m_key, key, value))
+
+
 class Cache:
     """This is a Cache using redis
     """
