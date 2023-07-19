@@ -11,5 +11,5 @@ TEST_CASES = {
 
 for value, fn in TEST_CASES.items():
     key = cache.store(value)
-    print(cache.get(key))
+    print(cache.get_str(cache.get(key)))
     assert cache.get(key, fn=fn) == value

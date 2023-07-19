@@ -23,7 +23,7 @@ class Cache:
         return key
 
     def get(self, key: str,
-            fn: Optional[Callable] = None) -> Union[bytes, str, float, int]:
+            fn: Optional[Callable] = None) -> Union[bytes, str, float, int, None]:
         """get original element"""
         val = self._redis.get(key)
         if fn:
