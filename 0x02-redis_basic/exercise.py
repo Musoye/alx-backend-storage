@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Using redis to create a cache"""
 
 
@@ -64,7 +64,7 @@ class Cache:
 
     @call_history
     @count_calls
-    def store(self, data: Union[bytes, str, float, int]) -> str:
+    def store(self, data: Union[str, bytes, int, float]) -> str:
         """A store method"""
         key = str(uuid4())
         self._redis.mset({key: data})
